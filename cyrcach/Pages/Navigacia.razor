@@ -1,0 +1,126 @@
+﻿@page "/fetchdata"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<div>
+        <input type = "text" placeholder = "Введие название зверя  " @bind = "search_name"/>
+                <button @onclick = "GetWorckersByName">Показать зверя по названию</button>
+                <button @onclick = "SaveName">Записать зверя в путеводитель</button>
+                <button @onclick = "ochistka">Создать новый путеводитель</button>
+                <button @onclick = "GetAllAsync">Показать всех животных</button>
+                        <label>@search_error</label>
+             <tr/>
+        <input type = "number" placeholder = "Удалем уникальный индекс" @bind = "id"/>    
+        <button @onclick = "GetWorckersByDelet">Удалить</button>
+                <button onclick= "history.go(-1)" > ← </button>
+    <table id = "table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Animals</th>
+            </tr>
+        </thead>
+        @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <tr>
+                    <th>@w.Id</th>
+                    <th>@w.Animals</th>
+                 </tr>
+            }
+        }
+    </table>
+</div>
+
+
+@code {
+    private List<Worker> workers;
+    public DateTime arrival;
+    public int? id;
+    public string? search_name;
+    private string? search_error;
+    private int? search_id;
+    public int? k;
+    public string? z;
+    public int? id_animals;
+    private async Task GetWorckersByID()
+    {
+        if (search_id != null)
+        {
+            workers = await WoService.GetWorckersByID(search_id.Value);
+        }
+        else
+        {
+            search_error = "ERROR enter Id";
+        }
+    }
+
+    private async Task GetWorckersByName()
+    {
+        if (search_name != null)
+        {
+            workers = await WoService.GetWorckersByName(search_name);
+        }
+        else
+        {
+            search_error = "ERROR enter name";
+        }
+    }
+    public async Task Name()
+    {
+        if (z != null)
+        {
+            search_name = z;
+            workers = await WoService.GetWorckersByName(z);
+        }
+        else
+        {
+            search_error = "ERROR no saved name";
+        }
+    }
+    public static string path = "C:\\Users\\Lagg1ng\\Desktop\\cyrcach\\cyrcach\\wwwroot\\Путеводитель.txt";
+
+    public void SaveID()
+    {
+        k = search_id;
+        search_id = null;
+    }
+    public void SaveName()
+    {
+        z = search_name;
+        File.AppendAllText(path,  z + '\n');
+    }  
+    public async Task Animal()
+    {
+        if (z != null)
+        {
+            search_name = z;
+            workers = await WoService.GetWorckersByName(z);
+        }
+        else
+        {
+            search_error = "ERROR no saved name";            
+        }
+    }
+    public void ochistka()
+    {
+        File.WriteAllText(path, string.Empty);
+    } 
+
+    public async Task GetWorckersByDelet()
+    {
+        if (id != null)
+        {
+            workers = await WoService.GetWorckersByDelet(id.Value);
+        }
+        else
+        {
+            search_error = "ERROR no saved name";   
+        }
+    }
+        private async Task GetAllAsync()
+    {
+        workers = await WoService.GetWorkers();
+    }
+}

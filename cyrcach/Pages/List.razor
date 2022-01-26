@@ -1,0 +1,67 @@
+﻿@page "/list"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<div>
+    <br/>
+        <input type = "number" placeholder = "Вводим  ID Клетки " @bind = "id_cells"/>
+        <input type = "number" placeholder = "Вводим ID  Зверя " @bind = "id_animals"/>
+        <input type = "number" placeholder = "Вводим ID  Мед. обследования " @bind = "id_medical_examination"/>   
+        <br/>
+        <input type = "number" placeholder = "Вводим ID  перевозки " @bind = "id_offspring"/>
+        <input type = "number" placeholder = "Вводим ID  питания " @bind = "id_feeding"/>
+        <label>@search_error</label>
+        
+        <button @onclick = "GetWorckersByCreate">Добавить уникальные номера</button>
+@*        <button @onclick = "GetAllAsync">Показать все имеющиеся клетки</button>*@
+        <button onclick= "history.go(-1)" > ← </button>
+@*        <br/>
+                <table id = "table">
+        <thead>
+                 <tr>
+                    <th>ID_cells</th>
+                    <th>ID_animals</th>
+                    <th>ID_medical_examination</th>
+                    <th>ID_offspring</th>
+                    <th>ID_feeding</th>
+                 </tr>
+        </thead>
+        @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <tr>
+                    <th>@w.ID_cells</th>
+                    <th>@w.ID_animals</th>
+                    <th>@w.ID_medical_examination</th>
+                    <th>@w.ID_offspring</th>
+                    <th>@w.ID_feeding</th>
+                 </tr>
+            }
+        }
+    </table>*@
+</div>
+@code {
+    private List<Worker> workers;
+    private string? search_error;
+    public int? id_cells;
+    public int? id_animals;
+    public int? id_medical_examination;
+    public int? id_offspring;
+    public int? id_feeding;
+    //private async Task GetAllAsync()
+    //{
+    //    workers = await WoService.GetWorkers1();
+    //}
+    public async Task GetWorckersByCreate()
+    {
+        if (id_cells != null & id_animals != null & id_medical_examination != null & id_offspring != null & id_feeding != null)
+        {
+            workers = await WoService.GetWorckersByCreate(id_cells.Value,id_animals.Value,id_medical_examination.Value,id_offspring.Value,id_feeding.Value);
+        }
+        else
+        {
+            search_error = "ERROR no saved name";   
+        }
+    }
+}

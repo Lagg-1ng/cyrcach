@@ -1,0 +1,47 @@
+﻿@page "/"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Zoo</h1>
+        <br/>
+        <button @onclick = "GetAllAsync">Show all</button>
+        <br/>
+        <table id = "table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Animals</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>offspiring</th>
+            </tr>
+        </thead>
+        @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <tr>
+                    <th>@w.Id</th>
+                    <th>@w.Animals</th>
+                    <th>@w.Age</th>
+                    <th>@w.Gender</th>
+                    <th>@w.offspiring</th>
+                 </tr>
+            }
+        }
+    </table>
+
+@code {
+    private List<Worker> workers;
+    private string? search_name;
+    private string? search_error;
+    private int? search_id;
+    public int? k;
+    public string? z;
+    private async Task GetAllAsync()
+    {
+        workers = await WoService.GetWorkers();
+    }
+}

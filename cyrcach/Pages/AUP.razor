@@ -1,0 +1,67 @@
+﻿@page "/AUP"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<div>
+    <br/>
+    <select name="number" @bind="aup1">
+        <option value="">Select a number</option>
+      @GetAllAsync2()
+          @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <option>
+                    @w.Id
+                </option>
+            }
+        }
+         </select>
+        <input type = "text" placeholder = "Вводим тип зверя  " @bind = "type_animals"/>
+        <input type = "text" placeholder = "Вводим животное" @bind = "animals"/>   
+        <br/>
+        <input type = "number" placeholder = "Введите возраст зверя в годах" @bind = "age"/>
+        <input type = "text" placeholder = "Введите пол животного" @bind = "gender"/>
+        <input type = "date" placeholder = "Дата" @bind = "arrival_date_at_the_zoo"/>
+        <input type = "text" placeholder = "Потомство" @bind = "offspring"/>
+        <label>@search_error</label>
+        
+        <button @onclick = "GetWorckersUP">Откорректировать животное</button>
+        <button onclick= "history.go(-1)" > ← </button>
+</div>
+
+@code {
+    private List<Worker> workers;
+    private string? search_error;
+    public int? id_animals;
+    public string? type_animals;
+    public string? animals;
+    public int? age;
+    public string? gender;
+    public DateTime arrival_date_at_the_zoo;
+    public string? offspring;
+
+    
+     private async Task GetAllAsync2()
+    {
+       workers = await WoService.GetWorkers2();
+    }
+
+    private int? _aup = null;
+    private int? aup1
+    {
+        get
+        {
+            return _aup;
+        }
+        set
+        {
+            _aup = value;
+        }
+    }
+
+    public async Task GetWorckersUP()
+    {
+        workers = await WoService.GetWorckersUP(type_animals,aup1.Value,animals,age.Value,gender,arrival_date_at_the_zoo,offspring);
+    }
+}

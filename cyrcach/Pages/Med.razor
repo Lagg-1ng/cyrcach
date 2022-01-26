@@ -1,0 +1,67 @@
+﻿@page "/Med"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<div>
+    <br/>
+    <select name="number" @bind="exchange1">
+        <option value="">Select a number</option>
+      @GetAllAsync8()
+          @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <option>
+                    @w.ID_exchange
+                </option>
+            }
+        }
+         </select>
+        <input type = "text" placeholder = "Животное" @bind = "animals"/>
+        <input type = "number" placeholder = "Вес" @bind = "weight"/>
+        <input type = "number" placeholder = "рост" @bind = "height"/>
+        <input type = "text" placeholder = "лекарство" @bind = "vaccination"/>
+        <input type = "text" placeholder = "болезнь" @bind = "disease"/>
+        <input type = "text" placeholder = "физ состояние" @bind = "physical_condition"/>
+        <input type = "date" placeholder = "болен с " @bind = "date"/>
+        <br/>
+        
+        <button @onclick = "GetWorckersByMed">Добавить запись</button>
+        <button onclick= "history.go(-1)" > ← </button>
+</div>
+
+@code {
+
+    private List<Worker> workers;
+    private int? id_medical_examination;
+    private string? animals;
+    private int? weight;
+    private int? height;
+    private string? vaccination;
+    private string? disease;
+    private string? physical_condition;
+    private DateTime date;
+
+    private async Task GetAllAsync8()
+    {
+        workers = await WoService.GetWorkers8();
+    }
+
+    private int? _exchange = null;
+    private int? exchange1
+    {
+        get
+        {
+            return _exchange;
+        }
+        set
+        {
+            _exchange = value;
+        }
+    }
+
+    public async Task GetWorckersByMed()
+    {
+        workers = await WoService.GetWorckersByMed(exchange1.Value,animals,weight.Value,height.Value,vaccination,disease,physical_condition,date);
+    }
+}

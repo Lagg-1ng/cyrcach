@@ -1,0 +1,62 @@
+﻿@page "/Offspring"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<div>
+    <br/>
+    <select name="number" @bind="exchange1">
+        <option value="">Select a number</option>
+      @GetAllAsync4()
+          @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <option>
+                    @w.ID_exchange
+                </option>
+            }
+        }
+         </select>
+        <input type = "text" placeholder = "куда" @bind = "where"/>
+        <input type = "text" placeholder = "откуда" @bind = "where_from"/>
+        <input type = "text" placeholder = "адресс" @bind = "address"/>
+        <input type = "text" placeholder = "обменяли на" @bind = "exchange_for"/>
+        <br/>
+        
+        <button @onclick = "GetWorckersByExchange">Добавить обмен</button>
+        <button onclick= "history.go(-1)" > ← </button>
+</div>
+
+@code {
+    
+    private List<Worker> workers;
+    private int? id_exchange;
+    private string? where;
+    private string? where_from;
+    private string? address;
+    private string? exchange_for;
+
+
+    private async Task GetAllAsync4()
+    {
+        workers = await WoService.GetWorkers4();
+    }
+
+    private int? _exchange = null;
+    private int? exchange1
+    {
+        get
+        {
+            return _exchange;
+        }
+        set
+        {
+            _exchange = value;
+        }
+    }
+
+    public async Task GetWorckersByExchange()
+    {
+        workers = await WoService.GetWorckersByExchange(exchange1.Value,where,where_from,address,exchange_for);
+    }
+}
