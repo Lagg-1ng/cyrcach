@@ -1,0 +1,39 @@
+﻿@page "/CreateFeeding"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<div>
+    <br/>
+        <input type = "text" placeholder = "Уникальный номер кормежки  " @bind = "id_feeding"/>
+        <input type = "date" placeholder = "дата" @bind = "date"/>   
+        <input type = "number" placeholder = "кол-во в день" @bind = "count_in_day"/>
+        <br/>
+       
+        <button @onclick = "GetWorckersUPP">Добавить рацион</button>
+        <button onclick= "history.go(-1)" > ← </button>
+        <label>@search_error</label>
+        
+
+</div>
+
+@code {
+    private List<Worker> workers;
+    private string? search_error;
+    public int id_feeding;
+    public DateTime date;
+    public int count_in_day;
+
+
+
+    public async Task GetWorckersUPP()
+    {
+        if (id_feeding != null & date != null & count_in_day != null)
+        {
+            workers = await WoService.CreateFeeding(id_feeding, date, count_in_day);
+        }
+        else
+        {
+            search_error = "Не все поля заполнены";
+        }
+    }
+}

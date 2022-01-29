@@ -1,0 +1,39 @@
+﻿@page "/CreateCage"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<div>
+    <br/>
+        <input type = "text" placeholder = "Уникальный номер вольера  " @bind = "id_cage"/>
+        <input type = "text" placeholder = "Тип вольера" @bind = "habitat"/>   
+        <input type = "number" placeholder = "кол-во особей" @bind = "animals_count"/>
+        <br/>
+       
+        <button @onclick = "GetWorckersUPP">Добавить вольер</button>
+        <button onclick= "history.go(-1)" > ← </button>
+        <label>@search_error</label>
+        
+
+</div>
+
+@code {
+    private List<Worker> workers;
+    private string? search_error;
+    public int id_cage;
+    public string? habitat;
+    public int animals_count;
+
+
+
+    public async Task GetWorckersUPP()
+    {
+        if (id_cage != null & habitat != null & animals_count != null)
+        {
+            workers = await WoService.CreateCage(id_cage, habitat, animals_count);
+        }
+        else
+        {
+            search_error = "Не все поля заполнены";
+        }
+    }
+}

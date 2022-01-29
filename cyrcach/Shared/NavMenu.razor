@@ -7,30 +7,25 @@
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
         <div class="nav-item px-4">
             <NavLink class="nav-link" href="">
                 <span class="oi  oi-info" aria-hidden="true"></span>  Animals
             </NavLink>
         </div>
-@*        <div class="nav-item px-4 ">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-infinity" aria-hidden="true"></span>  Travel guide
-            </NavLink>
-        </div>*@
         <div class="nav-item px-4 ">
-            <NavLink class="nav-link" href="AnimalsADD">
-                <span class="oi oi-infinity" aria-hidden="true"></span>  Animals addendum
+            <NavLink class="nav-link" href="CreateAnimals">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  Create Animals
             </NavLink>
+        </div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="feed">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  Feeding Animals
+            </NavLink>
+        </div>
         </div>
         <div class="nav-item px-4 ">
             <NavLink class="nav-link" href="fetchdata">
                 <span class="oi oi-infinity" aria-hidden="true"></span>  Map and Delet
-            </NavLink>
-        </div>
-        <div class="nav-item px-4 ">
-            <NavLink class="nav-link" href="list">
-                <span class="oi oi-justify-center" aria-hidden="true"></span>  Create Calls
             </NavLink>
         </div>
         <div class="nav-item px-4 ">
@@ -39,27 +34,55 @@
             </NavLink>
         </div>
         <div class="nav-item px-4 ">
-            <NavLink class="nav-link" href="Exchange">
-                <span class="oi oi-infinity" aria-hidden="true"></span>  Animals addendum
-            </NavLink>
-        </div>
-        <div class="nav-item px-4 ">
-            <NavLink class="nav-link" href="Offspring">
-                <span class="oi oi-justify-center" aria-hidden="true"></span>  Offspring
-            </NavLink>
-        </div>
-        <div class="nav-item px-4 ">
-            <NavLink class="nav-link" href="Feeding">
-                <span class="oi oi-justify-center" aria-hidden="true"></span>  Feeding
-            </NavLink>
-        </div>
-        <div class="nav-item px-4 ">
             <NavLink class="nav-link" href="Med">
                 <span class="oi oi-justify-center" aria-hidden="true"></span>  Med
             </NavLink>
         </div>
-    </nav>
-</div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="Cage">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  Cage
+            </NavLink>
+        </div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="CreateCage">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  Create Cage
+            </NavLink>
+        </div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="AUPCage">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  Upp Cage
+            </NavLink>
+        </div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="CageShow">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  CageShow
+            </NavLink>
+        </div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="CreateFeeding">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  Create Feeding
+            </NavLink>
+        </div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="FeedingShow">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  FeedingShow
+            </NavLink>
+        </div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="CreateMed">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  Create Med
+            </NavLink>
+        </div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="AUPMed">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  Upp Med
+            </NavLink>
+        </div>
+        <div class="nav-item px-4 ">
+            <NavLink class="nav-link" href="MedShow">
+                <span class="oi oi-infinity" aria-hidden="true"></span>  Med Show
+            </NavLink>
+        </div>
 
 @code {
     private bool collapseNavMenu = true;

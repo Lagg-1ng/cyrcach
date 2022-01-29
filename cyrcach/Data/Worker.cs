@@ -29,6 +29,18 @@
         public int? ID_animals { get; set; }
         public int? ID_exchange { get; set; }
         public int? ID_menu { get; set; }
+        public int? count_in_day { get; set; }
+        public DateTime date { get; set; }
+
+        public string? physical_condition { get; set; }
+        public string? disease { get; set; }
+        public int weight { get; set; }
+        public string? vaccination { get; set; }
+        public int? animals_count { get; set; }
+        public string? habitat { get; set; }
+        public int? Id_med { get; set; }
+        public int? Id_fed { get; set; }
+        public int? Id_cage { get; set; }
     }
 }
 

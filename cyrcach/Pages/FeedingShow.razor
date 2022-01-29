@@ -1,0 +1,58 @@
+﻿@page "/FeedingShow"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Zoo</h1>
+        <br/>
+        <input type = "number" placeholder = "Удалем уникальный индекс" @bind = "id"/>    
+        <button @onclick = "DeletFeed1">Удалить</button>
+        <button @onclick = "FeedingShoww">Show all</button>
+        <button onclick= "history.go(-1)" > ← </button>
+        <br/>
+        <table id = "table">
+        <thead>
+            <tr>
+                   <th>Id</th>
+                   <th>date</th>
+                   <th>coun_in_day</th>
+            </tr>
+        </thead>
+        @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <tr>
+                    <th>@w.Id</th>
+                    <th>@w.date</th>
+                    <th>@w.count_in_day</th>
+                 </tr>
+            }
+        }
+    </table>
+
+@code {
+    private List<Worker> workers;
+    private string? search_name;
+    private string? search_error;
+    private int? search_id;
+    public int? id;
+    public string? z;
+    public DateTime date;
+    private async Task FeedingShoww()
+    {
+        workers = await WoService.FeedingShow();
+    }
+        public async Task DeletFeed1()
+    {
+        if (id != null)
+        {
+            workers = await WoService.DeletFeed(id.Value);
+        }
+        else
+        {
+            search_error = "ERROR no saved name";   
+        }
+    }
+}

@@ -1,0 +1,49 @@
+﻿@page "/CreateMed"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<div>
+    <br/>
+        <input type = "text" placeholder = "Уникальный номер кормежки  " @bind = "id_medical_examination"/>
+        <input type = "date" placeholder = "дата" @bind = "date"/>    
+        <input type = "text" placeholder = "животное" @bind = "animals"/>
+        <input type = "text" placeholder = "физ. состояние  " @bind = "physical_examination"/>
+        <input type = "int" placeholder = "вес" @bind = "weight"/>   
+        <input type = "text" placeholder = "спсоб лечения" @bind = "vaccination"/>
+        <input type = "text" placeholder = "болезнь" @bind = "disease"/>
+        <br/>
+       
+        <button @onclick = "GetWorckersUPPP">Добавить запись</button>
+        <button onclick= "history.go(-1)" > ← </button>
+        <label>@search_error</label>
+        
+
+</div>
+
+@code {
+    private List<Worker> workers;
+    private string? search_error;
+    public int id_feeding;
+    public DateTime date;
+    public int count_in_day;
+    public string animals;
+    public int id_medical_examination;
+    public string physical_examination;
+    public int weight;
+    public string vaccination;
+    public string disease;
+
+
+
+    public async Task GetWorckersUPPP()
+    {
+        if (id_medical_examination != null & date != null & animals != null & physical_examination !=null & weight != null & vaccination != null & disease != null)
+        {
+            workers = await WoService.CreateMed(id_medical_examination,animals,date,weight,vaccination,disease,physical_examination);
+        }
+        else
+        {
+            search_error = "Не все поля заполнены";
+        }
+    }
+}

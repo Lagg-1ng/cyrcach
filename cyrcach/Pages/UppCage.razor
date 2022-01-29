@@ -1,0 +1,64 @@
+﻿@page "/AUPCage"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+
+        <div>
+        <input type = "number" placeholder = "кол-во животных" @bind = "animals_count"/>   
+        <br/>
+        <input type = "text" placeholder = "Тип клетки" @bind = "habitet"/>
+         <button @onclick = "UpCage">Откорректировать клетку</button>
+        <button onclick= "history.go(-1)" > ← </button>
+        <label>@search_error</label>
+        </div>
+        
+        <select name="number" @bind="id_cage1">
+        <option value="">Select a number</option>
+        @GIDCage()
+          @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <option>
+                    @w.Id_cage
+                </option>
+            }
+        }
+        </select>
+@code {
+    private List<Worker> workers;
+    private string? search_error;
+    public int id_cage;
+    public string? habitet;
+    public int animals_count;
+
+    private async Task GIDCage()
+    {
+       workers = await WoService.GetWorkers5();
+    }
+
+    private int? _id_cage1 = null;
+    private int? id_cage1
+    {
+        get
+        {
+            return _id_cage1;
+        }
+        set
+        {
+            _id_cage1 = value;
+        }
+    }
+
+    public async Task UpCage()
+    {
+        if (id_cage != null & animals_count != null & habitet != null)
+        {
+            workers = await WoService.UPCage(id_cage1.Value, animals_count, habitet);
+        }
+        else
+        {
+            search_error = "Не все поля заполнены";        
+        }
+    }
+}

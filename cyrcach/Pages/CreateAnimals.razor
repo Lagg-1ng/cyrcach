@@ -1,4 +1,4 @@
-﻿@page "/AUP"
+﻿@page "/CreateAnimals"
 @using cyrcach.Data
 @inject WorkersService WoService
 
@@ -6,23 +6,11 @@
     <br/>
         <input type = "text" placeholder = "Вводим тип зверя  " @bind = "type_animals"/>
         <input type = "text" placeholder = "Вводим животное" @bind = "animals"/>   
+        <input type = "number" placeholder = "Вводим уникальный номер" @bind = "id_animals"/>
         <br/>
         <input type = "number" placeholder = "Введите возраст зверя в годах" @bind = "age"/>
         <input type = "text" placeholder = "Введите пол животного" @bind = "gender"/>
         <input type = "date" placeholder = "Дата" @bind = "arrival_date_at_the_zoo"/>
-    <select name="number" @bind="id_animals1">
-    <option value="">Select a number</option>
-      @GIDAnimals()
-          @if (workers != null)
-        {
-            foreach (Worker w in workers)
-            {
-                 <option>
-                    @w.Id
-                </option>
-            }
-        }
-        </select>
 
         <select name="number" @bind="id_cage1">
         <option value="">Select a number</option>
@@ -65,9 +53,12 @@
             }
         }
         </select>
-        <label>@search_error</label>
-        <button @onclick = "GetWorckersUPP">Откорректировать животное</button>
+
+       
+        <button @onclick = "GetWorckersUPP">Добавить животное</button>
         <button onclick= "history.go(-1)" > ← </button>
+        <label>@search_error</label>
+        
 
 </div>
 
@@ -155,8 +146,9 @@
             _Medical_id1 = value;
         }
     }
+
     public async Task GetWorckersUPP()
     {
-        workers = await WoService.GetWorckersUP(type_animals,id_animals1.Value,id_feeding1.Value,id_cage1.Value,gender,arrival_date_at_the_zoo,animals,age,Medical_id1.Value);
+        workers = await WoService.CreateAnimals(id_animals,type_animals,animals,age,gender,arrival_date_at_the_zoo,id_feeding1.Value,Medical_id1.Value,id_cage1.Value);
     }
 }

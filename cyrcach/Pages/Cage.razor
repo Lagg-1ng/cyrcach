@@ -1,20 +1,18 @@
-﻿@page "/Med"
+﻿@page "/Cage"
 @using cyrcach.Data
 @inject WorkersService WoService
 
 <div>
     <br/>
         <input type = "text" placeholder = "Кого ищем " @bind = "animals"/>
-                <button @onclick = "GetWorckersByMeding">Поиск</button>
+                <button @onclick = "GetWorckersByCage">Поиск</button>
         <button onclick= "history.go(-1)" > ← </button>
         <br/>
         <table id = "table">
         <thead>
                 <th>animals</th>
-                <th>physical condition</th>
-                <th>disease</th>
-                <th>weight</th>
-                <th>vaccination</th>
+                <th>habitat</th>
+                <th>animals_count</th>
         </thead>
         @if (workers != null)
         {
@@ -22,10 +20,8 @@
             {
                  <tr>
                     <th>@w.Animals</th>
-                    <th>@w.physical_condition</th>
-                    <th>@w.disease</th>
-                   <th>@w.weight</th>
-                    <th>@w.vaccination</th>
+                    <th>@w.habitat</th>
+                    <th>@w.animals_count</th>
                  </tr>
             }
         }
@@ -37,12 +33,11 @@
     private List<Worker> workers;
     private int weight;
     private string? animals;
-    private string? physical_condition;
-    private string? disease;
-    private string? vaccination;
+    private string? habitat;
+    private int? animals_count;
 
-    public async Task GetWorckersByMeding()
+    public async Task GetWorckersByCage()
     {
-        workers = await WoService.VivodMed(animals,weight,vaccination,physical_condition,disease);
+        workers = await WoService.VivodCage(animals,animals_count,habitat);
     }
 }

@@ -1,0 +1,56 @@
+﻿@page "/Feed"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+<div>
+    <br/>
+        <input type = "text" placeholder = "Кого ищем " @bind = "animals"/>
+                <button @onclick = "GetWorckersByFeeding">Поиск</button>
+        <button onclick= "history.go(-1)" > ← </button>
+        <br/>
+        <table id = "table">
+        <thead>
+                <th>animals</th>
+                <th>count in day</th>
+                <th>date</th>
+        </thead>
+        @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <tr>
+                    <th>@w.Animals</th>
+                    <th>@w.count_in_day</th>
+                    <th>@w.date</th>
+                 </tr>
+            }
+        }
+    </table>
+</div>
+
+@code {
+
+    private List<Worker> workers;
+    private DateTime date;
+    private int? count_in_day;
+    private string? animals;
+
+
+    private string? _fed = null;
+    private string feeding1
+    {
+        get
+        {
+            return _fed;
+        }
+        set
+        {
+            _fed = value;
+        }
+    }
+
+    public async Task GetWorckersByFeeding()
+    {
+        workers = await WoService.VivodFed(animals,date,count_in_day);
+    }
+}

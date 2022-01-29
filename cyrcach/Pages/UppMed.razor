@@ -1,0 +1,73 @@
+﻿@page "/AUPMed"
+@using cyrcach.Data
+@inject WorkersService WoService
+
+
+        <div>
+        <br/>
+        <select name="number" @bind="id_med1">
+        <option value="">Select a number</option>
+        @GIDMed()
+          @if (workers != null)
+        {
+            foreach (Worker w in workers)
+            {
+                 <option>
+                    @w.Id_med
+                </option>
+            }
+        }
+        </select>
+        <input type = "text" placeholder = "животное" @bind = "animals"/>
+        <input type = "number" placeholder = "вес" @bind = "weight"/>
+        <input type = "text" placeholder = "вакцина" @bind = "vaccination"/>
+        <input type = "text" placeholder = "болезнь" @bind = "disease"/>
+        <input type = "text" placeholder = "физ состояния" @bind = "physical_condition"/>
+        <input type = "date" placeholder = "Дата" @bind = "date"/>
+         <button @onclick = "UpMed">Откорректировать мед запись</button>
+        <button onclick= "history.go(-1)" > ← </button>
+        <label>@search_error</label>
+        </div>
+        
+@code {
+    private List<Worker> workers;
+    private string? search_error;
+    public int id_medical_examination;
+    public int weight;
+    public int animals_count;
+    public DateTime date;
+    public string? animals;
+    public string? vaccination;
+    public string? disease;
+    public string? physical_condition;
+
+    private async Task GIDMed()
+    {
+       workers = await WoService.GetWorkers4();
+    }
+
+    private int? _id_med1 = null;
+    private int? id_med1
+    {
+        get
+        {
+            return _id_med1;
+        }
+        set
+        {
+            _id_med1 = value;
+        }
+    }
+
+    public async Task UpMed()
+    {
+        if (id_medical_examination != null & vaccination != null & weight != null & disease != null & date!=null & animals !=null & physical_condition!=null)
+        {
+            workers = await WoService.UPMed(id_med1.Value,weight,animals,vaccination,disease,physical_condition,date);
+        }
+        else
+        {
+            search_error = "Не все поля заполнены";        
+        }
+    }
+}
